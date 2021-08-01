@@ -1340,36 +1340,3 @@ dev.off()
 
 
 
-
-
-# 加载需要的R包
-library(Seurat)
-library(monocle3)
-data <- as(as.matrix(scRNAsub.tme@assays$RNA@counts), 'sparseMatrix')
-pd <- new('AnnotatedDataFrame', data = scRNAsub.tme@meta.data)
-fData <- data.frame(gene_short_name = row.names(data), row.names = row.names(data))
-fd <- new('AnnotatedDataFrame', data = fData)
-#Construct monocle cds
-monocle_cds <- newCellDataSet(data,phenoData = pd,featureData = fd,lowerDetectionLimit = 0.5,expressionFamily = negbinomial.size())
-monocle_cds@phenoData@data[["cell_type"]] <- as.character(scRNAsub.tme@active.ident)
-monocle_cds <- estimateSizeFactors(monocle_cds)
-monocle_cds <- estimateDispersions(monocle_cds)
-#Filtering low-quality cells
-monocle_cds <- detectGenes(monocle_cds, min_expr = 3 )
-disp_table <- dispersionTable(monocle_cds)
-unsup_clustering_genes <- subset(disp_table, mean_expression >= 0.1)
-monocle_cds <- setOrderingFilter(monocle_cds, unsup_clustering_genes$gene_id)
-monocle_cds <- reduceDimension(
- monocle_cds,
- max_components = 2,
- method = 'DDRTree')
-monocle_cds <- orderCells(monocle_cds)
-pdf("plot_cell_trajectory.pdf", width = 24, height = 18)
-plot_cell_trajectory(monocle_cds)
-plot_cell_trajectory(monocle_cds, color_by = "Pseudotime")
-dev.off()
-pdf("plot_cell_trajectory.pdf", width = 24, height = 18)
-plot_cell_trajectory(monocle_cds)
-plot_cell_trajectory(monocle_cds, color_by = "cell_type")
-dev.off()
-
