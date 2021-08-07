@@ -1047,25 +1047,6 @@ p1 <- LabelPoints(plot = p1, points = genes.to.label, repel = TRUE)
 p1
 dev.off()
 
-load("2_annotation/subcluster/scRNAsub.tme.afteranno.RData")
-features.plot <- c("NCL","NEAT1","LTB","TCL1A","CD79B","CD79A","MT-ND3","CST7","CXCL13","IGHG3","IGHG4","IGHG1")
-pdf("2_annotation/subcluster/Bcellsub.dittoDotPlot.pdf",width = 10, height = 5)
-DotPlot(object = scRNAsub.tme, features=features.plot,dot.scale = 12,cols = c("lightgrey", "red")) + RotatedAxis()
-dev.off()
-
-
-load("2_annotation/subcluster/scRNAsub.tme.afteranno.RData")
-features.plot <- c("B2M","CCL5","TUBB","LDHA","HIST1H4C","ARL6IP1","CD69","TSC22D3","CD44","UCP2")
-pdf("2_annotation/subcluster/Bcellsub.dittoDotPlot.pdf",width = 10, height = 5)
-DotPlot(object = scRNAsub.tme, features=features.plot,dot.scale = 12,cols = c("lightgrey", "red")) + RotatedAxis()
-dev.off()
-
-
-load("2_annotation/subcluster/scRNAsub.MPC.afteranno.RData")
-features.plot <- c("LTB","SAT1","CD79A","JUNB","CD69","HIST1H4C","UBE2C","TUBB4B","CKS1B","TYMS")
-pdf("2_annotation/subcluster/MPCsub.dittoDotPlot.pdf",width = 10, height = 3)
-DotPlot(object = scRNAsub.MPC, features=features.plot,dot.scale = 12,cols = c("lightgrey", "red")) + RotatedAxis()
-dev.off()
 
 
 ##############################################################################################################################
